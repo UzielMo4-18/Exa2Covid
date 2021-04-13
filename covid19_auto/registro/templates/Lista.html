@@ -5,7 +5,7 @@
 <p>Aquí encontrará toda la información de cada registro almacenado.</p>
 <br>
 <table class="table table-bordered">
-    <tr>
+    <tr class="table-dark">
         <th>Correo</th>
         <th>Temperatura</th>
         <th>Oxigenación</th>
@@ -13,13 +13,24 @@
         <th>Fecha y hora del registro</th>
     </tr>
     {% for user in usuarios %}
-    <tr>
-        <th>{{ user.correo }}</th>
-        <th>{{ user.temperatura }}</th>
-        <th>{{ user.oxigenacion }}</th>
-        <th>{{ user.positivo }}</th>
-        <th>{{ user.timestamp }}</th>
-    </tr>
+        {% if user.positivo == True %}
+            <tr class="table-warning">
+                <th>{{ user.correo }}</th>
+                <th>{{ user.temperatura }}</th>
+                <th>{{ user.oxigenacion }}</th>
+                <th>{{ user.positivo }}</th>
+                <th>{{ user.timestamp }}</th>
+            </tr>
+        {% else %}
+            <tr class="table-success">
+                <th>{{ user.correo }}</th>
+                <th>{{ user.temperatura }}</th>
+                <th>{{ user.oxigenacion }}</th>
+                <th>{{ user.positivo }}</th>
+                <th>{{ user.timestamp }}</th>
+            </tr>
+        {% endif %}
+
     {% endfor %}
 </table>
 {% endblock %}
