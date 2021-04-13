@@ -2,5 +2,24 @@
 {% block content %}
 <h1>Lista de registros</h1>
 <br>
-<p>Pendiente</p>
+<p>Aquí encontrará toda la información de cada registro almacenado.</p>
+<br>
+<table class="table table-bordered">
+    <tr>
+        <th>Correo</th>
+        <th>Temperatura</th>
+        <th>Oxigenación</th>
+        <th>Positivo a COVID-19</th>
+        <th>Fecha y hora del registro</th>
+    </tr>
+    {% for user in usuarios %}
+    <tr>
+        <th>{{ user.correo }}</th>
+        <th>{{ user.temperatura }}</th>
+        <th>{{ user.oxigenacion }}</th>
+        <th>{{ user.positivo }}</th>
+        <th>{{ user.timestamp }}</th>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

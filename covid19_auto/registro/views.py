@@ -38,7 +38,9 @@ class Register(View):
 
 class ListaRegistros(View):
     def get(self,request):
-        return render(request,'Lista.html',{})
+        usuarios=Usuario.objects.all()
+        context={'usuarios':usuarios}
+        return render(request,'Lista.html',context)
 
 class MsgAviso(View):
     def get(self,request):
