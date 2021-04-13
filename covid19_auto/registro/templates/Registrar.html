@@ -1,0 +1,10 @@
+{% extends "Base.html" %}
+{% block content %}
+<h1>Registro de datos</h1>
+<p>Por favor, ingrese los datos que se le solicitan en los siguientes campos.</p>
+<form method="post">
+  {% csrf_token %}
+  {{form}}
+  <button type="submit">Guardar</button>
+</form>
+{% endblock %}
