@@ -6,7 +6,7 @@ class Usuario(models.Model):
     timestamp=models.DateTimeField(auto_now_add=True)
     temperatura=models.FloatField()
     oxigenacion=models.IntegerField()
-    positivo=models.BooleanField()
+    positivo=models.BooleanField(default=False)
 
     def __str__(self):
         return self.correo
