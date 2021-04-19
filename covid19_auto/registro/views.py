@@ -2,13 +2,26 @@ from django.shortcuts import render,redirect
 from django.views import View
 from .models import Usuario
 from .forms import *
-import datetime
+import datetime,requests
 
 # Create your views here.
 
 class Home(View):
     def get(self,request):
-        return render(request,'index.html',{})
+        dia=datetime.date.today()
+        NewURL="https://api.covid19tracking.narrativa.com/api/"+str(dia)
+        NewURL=NewURL+"/country/mexico"
+        list_response=requests.get(NewURL)
+        json_response_list=list_response.json()
+
+        resultados=json_response_list['total']
+        confirmados=json_response_list['total']['today_confirmed']
+        recuperados=json_response_list['total']['today_recovered']
+        muertos=json_response_list['total']['today_deaths']
+        context={'confirmados':confirmados,'recuperados':recuperados,'muertos':muertos}
+        print(confirmados)
+        print(context)
+        return render(request,'index.html',context)
 
 class Register(View):
     def get(self,request):
