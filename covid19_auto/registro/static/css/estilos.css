@@ -1,0 +1,13 @@
+.icono{
+    font-size: 48px;
+    color: antiquewhite;
+}
+
+.div_color{
+    background-color: black;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    width: 16vh;
+    height: 6.2vw;
+}

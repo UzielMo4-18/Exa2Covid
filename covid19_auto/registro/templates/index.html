@@ -3,33 +3,132 @@
 <h1>Bienvenido a la app de autodiagnóstico de COVID-19</h1>
 <br>
 <p>En esta app usted registrará diariamente algunos datos para poder determinar si contrajo COVID-19</p>
-<div class="container">
+<div class="container mt-5">
     <h2>Dashboard</h2>
-    <div class="row row-cols-md-3">
-        <div class="col-sm-6">
-            <div class="card border-info mb-3" style="width: 18rem;">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card shadow p-3 mb-5 bg-body">
                 <div class="card-body">
-                    <h5 class="card-title">Número de casos</h5>
-                    <p class="card-text">{{ confirmados }}</p>
+                    <div class="row">
+                        <div class="col-2 div_color">
+                            <i class="fas fa-ambulance icono"></i>
+                        </div>
+                        <div class="col-sm">
+                            <h5 class="card-title">Número de casos</h5>
+                            <p class="card-text">{{ confirmadosT }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card border-success mb-3" style="width: 18rem;">
+        <div class="col-sm">
+            <div class="card shadow p-3 mb-5 bg-body">
                 <div class="card-body">
-                    <h5 class="card-title">Recuperados</h5>
-                    <p class="card-text">{{ recuperados }}</p>
+                    <div class="row">
+                        <div class="col-2 div_color">
+                            <i class="far fa-check-circle icono"></i>
+                        </div>
+                        <div class="col-sm">
+                            <h5 class="card-title">Recuperados</h5>
+                            <p class="card-text">{{ recuperadosT }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card border-danger mb-3" style="width: 18rem;">
+        <div class="col-sm">
+            <div class="card shadow p-3 mb-5 bg-body">
                 <div class="card-body">
-                    <h5 class="card-title">Muertes</h5>
-                    <p class="card-text">{{ muertos }}</p>
+                    <div class="row">
+                        <div class="col-2 div_color">
+                            <i class="fas fa-book-dead icono"></i>
+                        </div>
+                        <div class="col-sm">
+                            <h5 class="card-title">Muertes</h5>
+                            <p class="card-text">{{ muertosT }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="card shadow p-3 mb-5 bg-body">
+        <div class="card-body">
+            <h3>Estados con más casos</h3>
+            <canvas id="myChart" width="1000" height="400"></canvas>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="card shadow p-3 mb-5 bg-body">
+        <div class="card-body">
+            <h3>Tabla</h3>
+            <table class="table table-bordered">
+                <tr class="table-dark">
+                    <th>Encabezado 1</th>
+                    <th>Encabezado 2</th>
+                    <th>Encabezado 3</th>
+                    <th>Encabezado 4</th>
+                    <th>Encabezado 5</th>
+                </tr>
+                <tr>
+                    <th>Dato 1</th>
+                    <th>Dato 2</th>
+                    <th>Dato 3</th>
+                    <th>Dato 4</th>
+                    <th>Dato 5</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black',
+            'Brown', 'Cyan', 'Pink'],
+        datasets: [{
+            label: '# of Votes',
+            data: {{ casosE }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(0, 0, 0, 0.2)',
+                'rgba(128, 64, 0, 0.2)',
+                'rgba(0, 255, 255, 0.2)',
+                'rgba(234, 137, 154, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(0, 0, 0, 1)',
+                'rgba(128, 64, 0, 1)',
+                'rgba(0, 255, 255, 1)',
+                'rgba(234, 137, 154, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
 {% endblock %}
