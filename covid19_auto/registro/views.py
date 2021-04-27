@@ -8,15 +8,11 @@ import datetime,requests
 
 class estado(object):
     """docstring for estado"""
-    def __init__(self, nombre, ncasos):#, nrecuperados, nmuertos):
+    def __init__(self, nombre, ncasos, nrecuperados, nmuertos):
         self.nombre = nombre
         self.ncasos = ncasos
-        #self.nrecuperados = nrecuperados
-        #self.nmuertos = nmuertos
-
-    def info_estado(self):
-        print("Nombre del estado:",self.nombre)
-        print("Casos totales a la fecha:",self.ncasos,"\n")
+        self.nrecuperados = nrecuperados
+        self.nmuertos = nmuertos
 
 class Home(View):
     def get(self,request):
@@ -35,35 +31,28 @@ class Home(View):
         casosE=[]
         recuperadosE=[]
         muertesE=[]
-        states_array=[]
         for states in estados:
-            if states['name']: nombresE.append(states['name'])
-            if states['today_confirmed']: casosE.append(states['today_confirmed'])
-            #if states['today_deaths']: muertesE.append(states['today_deaths'])
-            #if states['today_recovered']: recuperadosE.append(states['today_recovered'])
+            nombresE.append(states['name'])
+            casosE.append(states['today_confirmed'])
+            try: recuperadosE.append(states['today_recovered'])
+            except: recuperadosE.append(0)
+            muertesE.append(states['today_deaths'])
 
+        estados.clear()
         for i in range(0,len(casosE)):
-            est=estado(nombresE[i],casosE[i])#,recuperadosE[i],muertesE[i])
-            states_array.append(est)
+            estados.append(estado(nombresE[i],casosE[i],recuperadosE[i],muertesE[i]))
 
         nombresE.clear()
         casosE.clear()
-        states_array.sort(key=lambda st:st.ncasos, reverse=True)
+        recuperadosE.clear()
+        muertesE.clear()
+        estados.sort(key=lambda st:st.ncasos, reverse=True)
         for st in range(0,10):
-            nombresE.append(states_array[st].nombre)
-            casosE.append(states_array[st].ncasos)
-            #recuperadosE.append(states_array[st].nrecuperados)
-            #muertesE.append(states_array[st].nmuertos)
-        #print("Top 10 estados con más casos\n")
-        #print(nombres)
-        #print(casos)
-        #for st in range(0,10):
-            #print("Nombre del estado:",nombres[st])
-            #print("Casos del estado:",casos[st],"\n")
+            nombresE.append(estados[st].nombre)
+            casosE.append(estados[st].ncasos)
 
-        context={'confirmadosT':confirmadosT,'recuperadosT':recuperadosT,
-            'muertosT':muertosT,'nombresE':nombresE,'casosE':casosE}#,'recuperadosE':recuperadosE,
-            #'muertesE':muertesE}
+        context={'confirmadosT':confirmadosT,'recuperadosT':recuperadosT,'muertosT':muertosT,
+            'nombresE':nombresE,'casosE':casosE,'estados':estados}
         return render(request,'index.html',context)
 
 class Register(View):

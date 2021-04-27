@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Bienvenido a la app de autodiagnóstico de COVID-19</h1>
 <br>
-<p>En esta app usted registrará diariamente algunos datos para poder determinar si contrajo COVID-19</p>
+<p>En esta app usted registrará diariamente algunos datos para poder determinar si contrajo COVID-19.</p>
 <div class="container mt-5">
     <h2>Dashboard</h2>
     <div class="row">
@@ -64,22 +64,22 @@
 <div class="container">
     <div class="card shadow p-3 mb-5 bg-body">
         <div class="card-body">
-            <h3>Tabla</h3>
+            <h3>Información de todos los estados</h3>
             <table class="table table-bordered">
                 <tr class="table-dark">
-                    <th>Encabezado 1</th>
-                    <th>Encabezado 2</th>
-                    <th>Encabezado 3</th>
-                    <th>Encabezado 4</th>
-                    <th>Encabezado 5</th>
+                    <th>Estado</th>
+                    <th>Casos totales</th>
+                    <th>Recuperados totales</th>
+                    <th>Muertes totales</th>
                 </tr>
-                <tr>
-                    <th>Dato 1</th>
-                    <th>Dato 2</th>
-                    <th>Dato 3</th>
-                    <th>Dato 4</th>
-                    <th>Dato 5</th>
-                </tr>
+                {% for estado in estados %}
+                    <tr>
+                        <th>{{ estado.nombre }}</th>
+                        <th>{{ estado.ncasos }}</th>
+                        <th>{{ estado.nrecuperados }}</th>
+                        <th>{{ estado.nmuertos }}</th>
+                    </tr>
+                {% endfor %}
             </table>
         </div>
     </div>
@@ -90,10 +90,9 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'Black',
-            'Brown', 'Cyan', 'Pink'],
+        labels: {{ nombresE|safe }},
         datasets: [{
-            label: '# of Votes',
+            label: '# de casos positivos',
             data: {{ casosE }},
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -119,7 +118,8 @@ var myChart = new Chart(ctx, {
                 'rgba(0, 255, 255, 1)',
                 'rgba(234, 137, 154, 1)'
             ],
-            borderWidth: 1
+            borderWidth: 2,
+            hoverBorderWidth: 0
         }]
     },
     options: {
